@@ -1,0 +1,4 @@
+FROM nvcr.io/nvidia/tritonserver:25.10-py3
+
+# install what your python model needs
+RUN pip install --no-cache-dir transformers torch

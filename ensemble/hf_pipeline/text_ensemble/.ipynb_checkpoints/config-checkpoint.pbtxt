@@ -1,0 +1,68 @@
+name: "text_ensemble"
+platform: "ensemble"
+
+input [
+  {
+    name: "TEXT"
+    data_type: TYPE_STRING
+    dims: [ -1 ]
+  }
+]
+
+output [
+  {
+    name: "LABEL"
+    data_type: TYPE_STRING
+    dims: [ -1 ]
+  }
+]
+
+ensemble_scheduling {
+  step [
+    {
+      model_name: "preprocess"
+      model_version: -1
+      input_map {
+        key: "TEXT"
+        value: "TEXT"
+      }
+      output_map {
+        key: "INPUT_IDS"
+        value: "INPUT_IDS"
+      }
+      output_map {
+        key: "ATTENTION_MASK"
+        value: "ATTENTION_MASK"
+      }
+    },
+    {
+      model_name: "torch_classifier"
+      model_version: -1
+      input_map {
+        key: "input_ids"
+        value: "INPUT_IDS"
+      }
+      input_map {
+        key: "attention_mask"
+        value: "ATTENTION_MASK"
+      }
+      output_map {
+        key: "logits"
+        value: "LOGITS"
+      }
+    },
+    {
+      model_name: "postprocess"
+      model_version: -1
+      input_map {
+        key: "LOGITS"
+        value: "LOGITS"
+      }
+      output_map {
+        key: "LABEL"
+        value: "LABEL"
+      }
+    }
+  ]
+}
+

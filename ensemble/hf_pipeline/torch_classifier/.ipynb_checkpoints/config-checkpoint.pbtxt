@@ -1,0 +1,25 @@
+name: "torch_classifier"
+backend: "pytorch"
+
+input [
+  {
+    name: "input_ids"
+    data_type: TYPE_INT64
+    dims: [ -1, 128 ]
+  },
+  {
+    name: "attention_mask"
+    data_type: TYPE_INT64
+    dims: [ -1, 128 ]
+  }
+]
+
+output [
+  {
+    name: "logits"
+    data_type: TYPE_FP32
+    dims: [ -1, 2 ]  # adjust to your num_labels
+  }
+]
+
+instance_group [{ kind: KIND_GPU }]

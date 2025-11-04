@@ -1,0 +1,25 @@
+name: "preprocess"
+backend: "python"
+
+input [
+  {
+    name: "TEXT"
+    data_type: TYPE_STRING
+    dims: [ -1 ]
+  }
+]
+
+output [
+  {
+    name: "INPUT_IDS"
+    data_type: TYPE_INT64
+    dims: [ -1, 128 ]
+  },
+  {
+    name: "ATTENTION_MASK"
+    data_type: TYPE_INT64
+    dims: [ -1, 128 ]
+  }
+]
+
+instance_group [{ kind: KIND_CPU }]

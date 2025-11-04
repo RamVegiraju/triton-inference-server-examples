@@ -1,0 +1,20 @@
+name: "postprocess"
+backend: "python"
+
+input [
+  {
+    name: "LOGITS"
+    data_type: TYPE_FP32
+    dims: [ -1, 2 ]
+  }
+]
+
+output [
+  {
+    name: "LABEL"
+    data_type: TYPE_STRING
+    dims: [ -1 ]
+  }
+]
+
+instance_group [{ kind: KIND_CPU }]
